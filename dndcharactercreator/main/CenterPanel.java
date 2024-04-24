@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import java.util.Random;
+
 import dndcharactercreator.races.*;
 import dndcharactercreator.classes.*;
 import dndcharactercreator.classes.Class;
@@ -344,15 +346,31 @@ public class CenterPanel extends JPanel
 	}
 	
 	/**
-	 * Fills each ability score ComboBox with values 8-16.
+	 * Fills each ability score ComboBox with 3 values rolled by a d6.
 	 * @param comboBox
 	 */
 	public void populateComboBox(JComboBox<Integer> comboBox)
 	{
-		for(int i = 8; i < 17; i++)
-		{
-			comboBox.addItem(i);
+		for (int i = 0; i < 3; i++) {
+			int lowestRoll = Integer.MAX_VALUE;
+			int total = 0;
+			for (int j = 0; j < 4; j++) {
+				Random r = new Random();
+				int low = 1;
+				int high = 6;
+				int result = r.nextInt(high-low) + low;
+
+				if (result < lowestRoll)
+					lowestRoll = result;
+				total += result;
+			}
+			total -= lowestRoll;
+			comboBox.addItem(total);
 		}
+		//for(int i = 8; i < 17; i++)
+		//{
+		//	comboBox.addItem(i);
+		//}
 	}
 	
 	/**
